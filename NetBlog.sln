@@ -3,12 +3,59 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Web", "NetBlog.Web\NetBlog.Web.csproj", "{6ED41D43-957D-490A-AD2B-987CEA6306DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Models", "NetBlog.Models\NetBlog.Models.csproj", "{08C4693E-184C-4D88-8A46-C627CCB1F3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.ViewModels", "NetBlog.ViewModels\NetBlog.ViewModels.csproj", "{DB3E6753-4B04-4EF0-ACA8-3728F6753803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Repositories", "NetBlog.Repositories\NetBlog.Repositories.csproj", "{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Utilities", "NetBlog.Utilities\NetBlog.Utilities.csproj", "{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Services", "NetBlog.Services\NetBlog.Services.csproj", "{D8846DB9-C690-4827-B766-866B12252359}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Data", "NetBlog.Data\NetBlog.Data.csproj", "{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6ED41D43-957D-490A-AD2B-987CEA6306DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED41D43-957D-490A-AD2B-987CEA6306DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED41D43-957D-490A-AD2B-987CEA6306DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED41D43-957D-490A-AD2B-987CEA6306DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C4693E-184C-4D88-8A46-C627CCB1F3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C4693E-184C-4D88-8A46-C627CCB1F3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C4693E-184C-4D88-8A46-C627CCB1F3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C4693E-184C-4D88-8A46-C627CCB1F3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3E6753-4B04-4EF0-ACA8-3728F6753803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3E6753-4B04-4EF0-ACA8-3728F6753803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3E6753-4B04-4EF0-ACA8-3728F6753803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3E6753-4B04-4EF0-ACA8-3728F6753803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8846DB9-C690-4827-B766-866B12252359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8846DB9-C690-4827-B766-866B12252359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8846DB9-C690-4827-B766-866B12252359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8846DB9-C690-4827-B766-866B12252359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7EEBAE7-3F3A-4256-BBF7-21D796EBE9EB}
 	EndGlobalSection
 EndGlobal
