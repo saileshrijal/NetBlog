@@ -1,0 +1,31 @@
+﻿@using NetBlog.Models
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+
+<ul class="navbar-nav ml-auto">
+    @if (signInManager.IsSignedIn(User))
+    {
+        <li class="nav-item d-flex justify-content-center align-items-center">
+            <a asp-controller="UserManagement" asp-action="ManageProfile" class="nav-link">
+                Hi, @userManager.Users?.FirstOrDefault(x=>x.UserName == User.Identity.Name)?.FirstName
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <form method="post" asp-action="Logout" asp-controller="UserManagement">
+                <button type="submit" class="btn btn-primary nav-link">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="UserManagement" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="UserManagement" asp-action="Login">Login</a>
+        </li>
+    }
+
+</ul>

@@ -15,6 +15,7 @@ namespace NetBlog.Models
         public string? CreatedDate { get; set; }
         public string? ThumbnailUrl { get; set; }
         public bool Status { get; set; }
+        public bool IsBanner { get; set; }
         public int UserId { get; set; }
         public ApplicationUser? User { get; set; }
 

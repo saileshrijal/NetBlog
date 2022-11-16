@@ -1,35 +1,60 @@
+
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NetBlog.Data;
 using NetBlog.Models;
+using NetBlog.Repositories.Interfaces;
+using NetBlog.Services.Implementations;
+using NetBlog.Services.Interfaces;
+using NetBlog.Utilities.Implementations;
+using NetBlog.Utilities.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddDefaultIdentity<ApplicationUser>(options=>options.SignIn.RequireConfirmedEmail=false);
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    builder.Services.AddControllersWithViews();
+    builder.Services.AddDbContext<ApplicationDbContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedEmail = false)
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+    builder.Services.AddControllersWithViews();
+
+    builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+    builder.Services.AddTransient<IUserService, UserService>();
+    builder.Services.AddTransient<IDbInitializer, DbInitializer>();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
 
-app.UseRouting();
 
-app.UseAuthorization();
+var app = builder.Build();
+{
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+    DataSeeding();
+    app.UseRouting();
+    app.UseNotyf();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+    app.Run();
+
+    void DataSeeding()
+    {
+        using (var scope = app.Services.CreateScope())
+        {
+            var DbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+            DbInitializer.Initialize();
+        }
+    }
+}
+
