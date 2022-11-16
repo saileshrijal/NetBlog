@@ -36,7 +36,7 @@ namespace NetBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 await _userService.Login(loginViewModel);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index), "Post", new { area = "Dashboard" });
             }
             return View(loginViewModel);
         }
