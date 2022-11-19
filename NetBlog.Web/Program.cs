@@ -3,6 +3,7 @@ using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NetBlog.Data;
 using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
@@ -18,19 +19,23 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddDbContext<ApplicationDbContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedEmail = false)
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+    builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = false)
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
-    builder.Services.AddControllersWithViews();
 
     builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/AccessDenied";
+    });
+
 
     builder.Services.AddTransient<IUserService, UserService>();
     builder.Services.AddTransient<IDbInitializer, DbInitializer>();
 }
-
-
 
 var app = builder.Build();
 {
@@ -49,6 +54,14 @@ var app = builder.Build();
           pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
         );
     });
+
+/*    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllerRoute(
+          name: "areas",
+          pattern: "{area=Dashboard}/{controller=Post}/{action=Index}/{id?}"
+        );
+    });*/
 
     app.MapControllerRoute(
         name: "default",

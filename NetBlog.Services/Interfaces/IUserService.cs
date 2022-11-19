@@ -11,5 +11,11 @@ namespace NetBlog.Services.Interfaces
     {
         Task Login(LoginViewModel vm);
         Task Logout();
+        Task Register(RegisterViewModel vm);
+        Task <List<UserViewModel>> GetUsers();
+        Task<ProfileViewModel> GetUserProfileById(string id);
+        Task UpdateProfile(ProfileViewModel vm);
+        Task ChangeStatus(string id);
+        Task ResetPassword(ResetPasswordViewModel vm);
     }
 }

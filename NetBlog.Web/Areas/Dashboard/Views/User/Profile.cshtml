@@ -1,0 +1,85 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewData["Title"] = "User Login";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+        <a class="btn btn-primary" asp-action="Index"><i class="fa fa-arrow-left"></i> Go Back</a>
+    </h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Register New User</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Profile" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" asp-for="FirstName" class="form-control" />
+                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" asp-for="LastName" class="form-control" />
+                            <span class="text-danger" asp-validation-for="LastName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" asp-for="Email" class="form-control" disabled/>
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" asp-for="UserName" class="form-control" disabled/>
+                            <span class="text-danger" asp-validation-for="UserName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Profile Picture</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" asp-for="ProfilePicture">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>About</label>
+                            <textarea class="form-control" rows="5" asp-for="About"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        @if(Model.ProfilePictureUrl==null){
+                        <img src="~/user-img/default.jpg" class="img-fluid" id="profilePic"/>
+                        }
+                        else{
+                            <img src="~/user-img/@Model.ProfilePictureUrl" class="img-fluid" id="profilePic" />
+                        }
+                    </div>
+                </div>
+                
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            document.getElementById('profilePic').src = window.URL.createObjectURL(this.files[0])
+        });
+
+        
+
+    </script>
+}
