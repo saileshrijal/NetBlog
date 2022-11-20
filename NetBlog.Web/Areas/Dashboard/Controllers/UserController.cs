@@ -81,7 +81,14 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View();
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index), "Post", new { area = "Dashboard" });
+            }
         }
 
         [HttpPost("Login")]

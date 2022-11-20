@@ -1,6 +1,7 @@
 
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,8 +31,8 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.LoginPath = "/Login";
         options.AccessDeniedPath = "/AccessDenied";
+        options.ForwardAuthenticate = "/dashboard/post/index";
     });
-
 
     builder.Services.AddTransient<IUserService, UserService>();
     builder.Services.AddTransient<IDbInitializer, DbInitializer>();
@@ -55,6 +56,7 @@ var app = builder.Build();
     DataSeeding();
     app.UseRouting();
     app.UseNotyf();
+    app.UseCookiePolicy();
     app.UseAuthentication();
     app.UseAuthorization();
 
@@ -66,13 +68,6 @@ var app = builder.Build();
         );
     });
 
-/*    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapControllerRoute(
-          name: "areas",
-          pattern: "{area=Dashboard}/{controller=Post}/{action=Index}/{id?}"
-        );
-    });*/
 
     app.MapControllerRoute(
         name: "default",
