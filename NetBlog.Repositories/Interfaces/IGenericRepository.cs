@@ -13,7 +13,7 @@ namespace NetBlog.Repositories.Interfaces
         Task<List<T>> GetAllBy(Expression<Func<T, bool>> predicate);
         Task<T?> GetBy(Expression<Func<T, bool>> predicate);
         Task Create(T t);
-        Task Delete(Guid id);
+        Task Delete(int id);
         void Edit(T t);
         Task<bool> CheckExistBy(Expression<Func<T, bool>> predicate);
         int TotalCount();

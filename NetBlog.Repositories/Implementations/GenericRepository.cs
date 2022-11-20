@@ -12,7 +12,7 @@ namespace NetBlog.Repositories.Implementations
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _context;
+        public ApplicationDbContext _context;
         private readonly DbSet<T> entities;
 
         public GenericRepository(ApplicationDbContext context)
@@ -21,17 +21,17 @@ namespace NetBlog.Repositories.Implementations
             entities = context.Set<T>();
         }
 
-        public async Task<bool> CheckExistBy(Expression<Func<T, bool>> predicate)
+        virtual public async Task<bool> CheckExistBy(Expression<Func<T, bool>> predicate)
         {
             return await entities.AnyAsync(predicate);
         }
 
-        public async Task Create(T t)
+        virtual public async Task Create(T t)
         {
             await entities.AddAsync(t);
         }
 
-        public async Task Delete(Guid id)
+        virtual public async Task Delete(int id)
         {
             var entity = await entities.FindAsync(id);
             if (entity != null)
@@ -40,7 +40,7 @@ namespace NetBlog.Repositories.Implementations
             }
         }
 
-        public void Edit(T t)
+        virtual public void Edit(T t)
         {
             entities.Update(t);
         }
@@ -50,16 +50,16 @@ namespace NetBlog.Repositories.Implementations
             return await entities.ToListAsync();
         }
 
-        public async Task<List<T>> GetAllBy(Expression<Func<T, bool>> predicate)
+        virtual public async Task<List<T>> GetAllBy(Expression<Func<T, bool>> predicate)
         {
             return await entities.Where(predicate).ToListAsync();
         }
 
-        public async Task<T?> GetBy(Expression<Func<T, bool>> predicate)
+        virtual public async Task<T?> GetBy(Expression<Func<T, bool>> predicate)
         {
             return await entities.FirstOrDefaultAsync(predicate);
         }
-        public int TotalCount()
+        virtual public int TotalCount()
         {
             return entities.Count();
         }

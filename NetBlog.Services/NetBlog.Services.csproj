@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetBlog.Repositories\NetBlog.Repositories.csproj" />
     <ProjectReference Include="..\NetBlog.ViewModels\NetBlog.ViewModels.csproj" />
   </ItemGroup>
 
