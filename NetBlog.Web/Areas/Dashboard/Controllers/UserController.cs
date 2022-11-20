@@ -168,11 +168,5 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("AccessDenied")]
-        [AllowAnonymous]
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
     }
 }
