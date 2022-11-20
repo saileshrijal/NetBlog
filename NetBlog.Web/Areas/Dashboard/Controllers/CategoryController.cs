@@ -59,9 +59,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var categorVM = await _categoryService.GetCategory(id);
-            if(categorVM == null)
+            if (categorVM.Id == 0)
             {
-                return NotFound();
+                _notifyService.Error("Category Not Found");
+                return RedirectToAction(nameof(Index));
             }
             return View(categorVM);
         }

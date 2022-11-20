@@ -156,6 +156,11 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> ResetPassword(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                _notifyService.Error("User Not Found");
+                return RedirectToAction(nameof(Index));
+            }
             var vm = new ResetPasswordViewModel() {
                 Id = user.Id,
                 FirstName = user.FirstName,

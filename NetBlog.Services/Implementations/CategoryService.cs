@@ -42,7 +42,11 @@ namespace NetBlog.Services.Implementations
         public async Task<CategoryViewModel> GetCategory(int id)
         {
             var model = await _unitOfWork.Category.GetBy(x => x.Id == id);
-            var vm = new CategoryViewModel(model);
+            var vm = new CategoryViewModel();
+            if(model != null)
+            {
+                vm = new CategoryViewModel(model);
+            }
             return vm;
         }
 
