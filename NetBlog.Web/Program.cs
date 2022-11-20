@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetBlog.Data;
 using NetBlog.Models;
+using NetBlog.Repositories.Implementations;
 using NetBlog.Repositories.Interfaces;
 using NetBlog.Services.Implementations;
 using NetBlog.Services.Interfaces;
@@ -33,8 +34,10 @@ var builder = WebApplication.CreateBuilder(args);
         options.AccessDeniedPath = "/AccessDenied";
     });
 
-    builder.Services.AddTransient<IUserService, UserService>();
-    builder.Services.AddTransient<IDbInitializer, DbInitializer>();
+    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+    builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 }
 
 var app = builder.Build();
