@@ -31,7 +31,6 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.LoginPath = "/Login";
         options.AccessDeniedPath = "/AccessDenied";
-        options.ForwardAuthenticate = "/dashboard/post/index";
     });
 
     builder.Services.AddTransient<IUserService, UserService>();
