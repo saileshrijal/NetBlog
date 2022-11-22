@@ -55,11 +55,7 @@ namespace NetBlog.Services.Implementations
 
             if (result.Succeeded)
             {
-                var isCrated = await _userManager.AddToRoleAsync(user, vm.Role);
-                if (isCrated.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, false);
-                }
+                await _userManager.AddToRoleAsync(user, vm.Role);
             }
         }
 
