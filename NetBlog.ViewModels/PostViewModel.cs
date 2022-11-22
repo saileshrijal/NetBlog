@@ -27,5 +27,43 @@ namespace NetBlog.ViewModels
 
         //navigation properties
         public List<PostCategory>? PostCategories { get; set; }
+
+        public PostViewModel()
+        {
+        }
+
+        public PostViewModel(Post model)
+        {
+            Id = model.Id;
+            Title = model.Title;
+            Description = model.Description;
+            ShortDescription = model.ShortDescription;
+            Slug = model.Slug;
+            CreatedDate = model.CreatedDate;
+            ThumbnailUrl = model.ThumbnailUrl;
+            Status = model.Status;
+            IsBanner = model.IsBanner;
+            UserId = model.UserId;
+            PostCategories = model.PostCategories;
+        }
+
+        public Post ConvertViewModel(PostViewModel model)
+        {
+            return new Post
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                ShortDescription = model.ShortDescription,
+                Slug = model.Slug,
+                CreatedDate = model.CreatedDate,
+                ThumbnailUrl = model.ThumbnailUrl,
+                Status = model.Status,
+                IsBanner = model.IsBanner,
+                UserId = model.UserId,
+                PostCategories = model.PostCategories
+            };
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using NetBlog.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,9 +17,19 @@ namespace NetBlog.Repositories.Implementations
         {
         }
 
-/*        public override async Task<List<Category>> GetAll()
+        public override async Task<Post?> GetBy(Expression<Func<Post, bool>> predicate)
         {
-            return await _context.Categories.Include(x => x.User).ToListAsync();
-        }*/
+            return await _context.Posts.Include(x => x.User).Include(x=>x.PostCategories).ThenInclude(x=>x.Category).FirstOrDefaultAsync(predicate);
+        }
+
+        public override async Task<List<Post>> GetAll()
+        {
+            return await _context.Posts.Include(x => x.User).Include(x=>x.PostCategories).ThenInclude(x=>x.Category).ToListAsync();
+        }
+
+        public async Task<List<Post>> GetAllPostByUserId(string userId)
+        {
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x=>x.UserId==userId).ToListAsync();
+        }
     }
 }

@@ -20,14 +20,16 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IPostService _postService;
 
-        public PostController(IWebHostEnvironment webHostEnvironment, ICategoryService categoryService, IUnitOfWork unitOfWork, INotyfService notifyService, UserManager<ApplicationUser> userManager)
+        public PostController(IPostService postService, IWebHostEnvironment webHostEnvironment, ICategoryService categoryService, IUnitOfWork unitOfWork, INotyfService notifyService, UserManager<ApplicationUser> userManager)
         {
             _notifyService = notifyService;
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _categoryService = categoryService;
             _webHostEnvironment = webHostEnvironment;
+            _postService = postService;
         }
 
         public IActionResult Index()
@@ -54,43 +56,13 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Create(PostViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
-            var selectedCateogries = vm.Categories?.Where(x => x.Selected).Select(x=>x.Value).Select(int.Parse).ToList();
-            var categories = selectedCateogries?.Select(x => new Category());
             var userId = _userManager.GetUserId(HttpContext.User);
-            var post = new Post
-            {
-                Title = vm.Title,
-                Description = vm.Description,
-                UserId = userId,
-                Slug = vm.Slug,
-                ShortDescription = vm.ShortDescription,
-                CreatedDate = vm.CreatedDate,
-                IsBanner = vm.IsBanner,
-                Status = vm.Status,
-            };
+            vm.UserId = userId;
             if(vm.Thumbnail != null)
             {
-                post.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "thumbnails");
+                vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "thumbnails");
             }
-            if (vm.Title != null)
-            {
-                string slug = vm.Title.Trim();
-                slug = slug.Replace(" ", "-");
-                post.Slug = slug + "-" + Guid.NewGuid();
-            }
-
-            post.PostCategories = new List<PostCategory>();
-            foreach (var categoryId in selectedCateogries)
-            {
-                post.PostCategories?.Add(new PostCategory
-                {
-                    Post = post,
-                    CategoryId = categoryId,
-                });
-            }
-
-            await _unitOfWork.Post.Create(post);
-            await _unitOfWork.SaveAsync();
+            await _postService.CreatePost(vm);
             _notifyService.Success("Post created successfully");
             return RedirectToAction(nameof(Index));
         }
