@@ -28,8 +28,15 @@ namespace NetBlog.Services.Implementations
 
         public async Task DeleteCategory(int id)
         {
-            await _unitOfWork.Category.Delete(id);
-            await _unitOfWork.SaveAsync();
+            try
+            {
+                await _unitOfWork.Category.Delete(id);
+                await _unitOfWork.SaveAsync();
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<List<CategoryViewModel>> GetCategories()

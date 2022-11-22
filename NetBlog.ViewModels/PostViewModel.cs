@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NetBlog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetBlog.Models
+namespace NetBlog.ViewModels
 {
-    public class Post
+    public class PostViewModel
     {
         public int Id { get; set; }
         public string? Title { get; set; }
@@ -15,9 +17,11 @@ namespace NetBlog.Models
         public string? ShortDescription { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public string? ThumbnailUrl { get; set; }
+        public IFormFile? Thumbnail { get; set; }
         public bool Status { get; set; }
         public bool IsBanner { get; set; }
         public string? Slug { get; set; }
+        public List<SelectListItem>? Categories { get; set; }
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 

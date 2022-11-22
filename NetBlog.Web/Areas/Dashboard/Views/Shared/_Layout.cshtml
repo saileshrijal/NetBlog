@@ -43,10 +43,18 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider"/>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-action="Create" asp-controller="Post">
+                    <i class="fa fa-plus-circle"></i>
+                    <span>New Post</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider" />
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" asp-action="Index" asp-controller="Post">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Post</span>
@@ -126,7 +134,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    @*<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                    aria-label="Search" aria-describedby="basic-addon2">
@@ -136,7 +144,8 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>*@
+                   
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -166,7 +175,7 @@
                         </li>
 
                         <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
+                      @*  <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
@@ -214,7 +223,7 @@
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
-                        </li>
+                        </li>*@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -260,7 +269,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; NetBlog @DateTime.Now.Year</span>
                     </div>
                 </div>
             </footer>

@@ -1,0 +1,108 @@
+﻿@model PostViewModel
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+        <a class="btn btn-primary" asp-action="Index"><i class="fa fa-arrow-left"></i> Go Back</a>
+    </h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Create New Post</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-action="Create">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" asp-for="Title" class="form-control" />
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Short Description</label>
+                            <input type="text" asp-for="ShortDescription" class="form-control" />
+                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input type="text" asp-for="Slug" class="form-control" />
+                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="15"></textarea>
+                            <span class="text-danger" asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold text-primary">Choose Categories:</h6>
+                                </div>
+                                <div class="card-body" style="overflow-y:scroll;height:80px;">
+                                    @for (int i = 0; i < Model.Categories.Count; i++)
+                                    {
+                                        <input type="hidden" asp-for="Categories[i].Value">
+                                        <span class="m-2 text-capitalize">
+                                            <input asp-for="Categories[i].Selected"> @Model.Categories[i].Text
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="m-0 font-weight-bold text-primary">Choose Status:</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <input class="custom-checkbox" asp-for="IsBanner" />
+                                        <label>Banner</label>
+                                    </div>
+
+                                    <div>
+                                        <input class="custom-checkbox" asp-for="Status" />
+                                        <label>Publish</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Thumbnail</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" asp-for="Thumbnail">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <img src="~/thumbnails/default.png" class="img-fluid"/>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            document.getElementById('profilePic').src = window.URL.createObjectURL(this.files[0])
+        });
+
+    </script>
+}
