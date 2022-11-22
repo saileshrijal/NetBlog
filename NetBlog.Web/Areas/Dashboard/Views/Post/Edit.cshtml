@@ -11,8 +11,12 @@
             <h6 class="m-0 font-weight-bold text-primary">Create New Post</h6>
         </div>
         <div class="card-body">
-            <form method="post" asp-action="Create" enctype="multipart/form-data">
-                <input asp-for="Id" type="hidden"/>
+            <form method="post" asp-action="Edit" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="Slug"/>
+                <input type="hidden" asp-for="CreatedDate"/>
+                <input type="hidden" asp-for="UserId"/>
+                <input type="hidden" asp-for="ThumbnailUrl"/>
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="form-group">
@@ -80,7 +84,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <img src="~/thumbnails/default.png" class="img-fluid" id="thumbnailPic"/>
+                            @if(Model.ThumbnailUrl==null){
+                                <img src="~/thumbnails/default.png" class="img-fluid" id="thumbnailPic" />
+                            }
+                            else{
+                                <img src="~/thumbnails/@Model.ThumbnailUrl" class="img-fluid" id="thumbnailPic" />
+                            }
                         </div>
                     </div>
                     

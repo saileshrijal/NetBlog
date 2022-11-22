@@ -43,6 +43,7 @@ namespace NetBlog.ViewModels
             ThumbnailUrl = model.ThumbnailUrl;
             Status = model.Status;
             IsBanner = model.IsBanner;
+            User = model.User;
             UserId = model.UserId;
             PostCategories = model.PostCategories;
         }
@@ -60,6 +61,7 @@ namespace NetBlog.ViewModels
                 ThumbnailUrl = model.ThumbnailUrl,
                 Status = model.Status,
                 IsBanner = model.IsBanner,
+                User = model.User,
                 UserId = model.UserId,
                 PostCategories = model.PostCategories
             };

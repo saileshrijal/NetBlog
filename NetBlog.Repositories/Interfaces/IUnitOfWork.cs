@@ -10,6 +10,7 @@ namespace NetBlog.Repositories.Interfaces
     {
         ICategoryRepository Category { get; }
         IPostRepository Post { get; }
+        IPostCategoryRepository PostCategory { get; }
         Task SaveAsync();
     }
 }

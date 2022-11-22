@@ -32,9 +32,20 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             _postService = postService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
+            var roles = await _userManager.GetRolesAsync(loggedInUser);
+            var vm = new List<PostViewModel>();
+            if (roles[0] == "Admin")
+            {
+                vm = await _postService.GetPosts();
+            }
+            else
+            {
+                vm = await _postService.GetPostsByUserId(loggedInUser.Id);
+            }
+            return View(vm);
         }
 
         [HttpGet]
@@ -64,6 +75,38 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             }
             await _postService.CreatePost(vm);
             _notifyService.Success("Post created successfully");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
+            var roles = await _userManager.GetRolesAsync(loggedInUser);
+            var postVM = await _postService.GetPost(id);
+            if (postVM.Id == 0) 
+            {
+                _notifyService.Error("Post not found");
+                return RedirectToAction(nameof(Index)); 
+            }
+            if(loggedInUser.Id != postVM.UserId && roles[0] != "Admin")
+            {
+                _notifyService.Error("You are not authorized");
+                return View(nameof(Index));
+            }
+            return View(postVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostViewModel vm)
+        {
+            if (!ModelState.IsValid) { return View(vm); }
+            if (vm.Thumbnail != null)
+            {
+                vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "thumbnails");
+            }
+            await _postService.UpdatePost(vm);
+            _notifyService.Success("Post updated successfully");
             return RedirectToAction(nameof(Index));
         }
     }

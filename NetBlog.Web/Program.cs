@@ -3,6 +3,9 @@ using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetBlog.Data;
@@ -13,6 +16,8 @@ using NetBlog.Services.Implementations;
 using NetBlog.Services.Interfaces;
 using NetBlog.Utilities.Implementations;
 using NetBlog.Utilities.Interfaces;
+using System;
+using System.Security.Policy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +41,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<IPostService, PostService>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 }

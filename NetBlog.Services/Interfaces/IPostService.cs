@@ -13,5 +13,6 @@ namespace NetBlog.Services.Interfaces
         Task<List<PostViewModel>> GetPosts();
         Task<PostViewModel> GetPost(int id);
         Task CreatePost(PostViewModel vm);
+        Task UpdatePost(PostViewModel vm);
     }
 }

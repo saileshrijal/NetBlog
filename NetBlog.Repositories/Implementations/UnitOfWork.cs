@@ -12,12 +12,14 @@ namespace NetBlog.Repositories.Implementations
     {
         public ICategoryRepository Category {get; private set;}
         public IPostRepository Post {get; private set;}
+        public IPostCategoryRepository PostCategory {get; private set;}
         private readonly ApplicationDbContext _context;
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Category = new CategoryRepository(context);
             Post = new PostRepository(context);
+            PostCategory = new PostCategoryRepository(context);
         }
         public async Task SaveAsync()
         {

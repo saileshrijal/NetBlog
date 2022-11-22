@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NetBlog.Data;
 using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
@@ -64,9 +65,40 @@ namespace NetBlog.Services.Implementations
 
         public async Task<PostViewModel> GetPost(int id)
         {
-            var model = await _unitOfWork.Post.GetBy(x => x.Id == id);
-            var vm = new PostViewModel(model);
-            return vm;
+            try
+            {
+                var model = await _unitOfWork.Post.GetBy(x => x.Id == id);
+                var vm = new PostViewModel();
+                if(model == null)
+                {
+                    return vm;
+                }
+                vm = new PostViewModel(model);
+                var CategoriesList = await _unitOfWork.Category.GetAll();
+                var selectedCategoryList = await _unitOfWork.PostCategory.GetAllBy(pc => pc.PostId == model.Id);
+                vm.Categories = new List<SelectListItem>();
+                vm.Categories = CategoriesList.Select(x => new SelectListItem
+                {
+                    Text = x.Title,
+                    Value = x.Id.ToString()
+                }).ToList();
+
+                foreach (var item in vm.Categories)
+                {
+                    foreach (var selectedcategory in selectedCategoryList)
+                    {
+                        if (item.Value == selectedcategory.CategoryId.ToString())
+                        {
+                            item.Selected = true;
+                        }
+                    }
+                }
+                return vm;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<List<PostViewModel>> GetPosts()
@@ -81,6 +113,39 @@ namespace NetBlog.Services.Implementations
             var listOfPosts = await _unitOfWork.Post.GetAllPostByUserId(userId);
             var listOfPostsVM = ConvertModelToViewModelList(listOfPosts);
             return listOfPostsVM;
+        }
+
+        public async Task UpdatePost(PostViewModel vm)
+        {
+            var post = await _unitOfWork.Post.GetBy(x => x.Id == vm.Id);
+            post.Title = vm.Title;
+            post.Description = vm.Description;
+            post.ShortDescription = vm.ShortDescription;
+            post.ThumbnailUrl = vm.ThumbnailUrl;
+            post.Status = vm.Status;
+            post.IsBanner = vm.IsBanner;
+            post.CreatedDate = vm.CreatedDate;
+
+            var CategoriesList = await _unitOfWork.PostCategory.GetAllBy(pc => pc.PostId == post.Id);
+
+            foreach (var item in CategoriesList)
+            {
+                await _unitOfWork.PostCategory.Delete(item.Id);
+            }
+            var selectedCateogries = vm.Categories?.Where(x => x.Selected).Select(x => x.Value).Select(int.Parse).ToList();
+
+            post.PostCategories = new List<PostCategory>();
+            foreach (var categoryId in selectedCateogries)
+            {
+                post.PostCategories?.Add(new PostCategory
+                {
+                    Post = post,
+                    CategoryId = categoryId,
+                });
+            }
+
+            _unitOfWork.Post.Edit(post);
+            await _unitOfWork.SaveAsync();
         }
 
         private List<PostViewModel> ConvertModelToViewModelList(List<Post> listOfPosts)
