@@ -63,6 +63,12 @@ namespace NetBlog.Services.Implementations
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task DeletePost(int id)
+        {
+            await _unitOfWork.Post.Delete(id);
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task<PostViewModel> GetPost(int id)
         {
             try

@@ -109,5 +109,19 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             _notifyService.Success("Post updated successfully");
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var postVM = await _postService.GetPost(id);
+            if (postVM.Id == 0)
+            {
+                _notifyService.Error("Post not found");
+                return RedirectToAction(nameof(Index));
+            }
+            await _postService.DeletePost(id);
+            _notifyService.Success("Post has been deleted successfully");
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

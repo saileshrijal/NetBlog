@@ -14,5 +14,6 @@ namespace NetBlog.Services.Interfaces
         Task<PostViewModel> GetPost(int id);
         Task CreatePost(PostViewModel vm);
         Task UpdatePost(PostViewModel vm);
+        Task DeletePost(int id);
     }
 }
