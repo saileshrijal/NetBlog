@@ -11,12 +11,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
     [Authorize(Roles ="Admin")]
     public class PageController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
         private INotyfService _notifyService;
         private readonly IPageService _pageService;
-        public PageController(IUnitOfWork unitOfWork, INotyfService notifyService, IPageService pageService)
+        public PageController(INotyfService notifyService, IPageService pageService)
         {
-            _unitOfWork = unitOfWork;
             _notifyService = notifyService; 
             _pageService = pageService;
         }
@@ -34,6 +32,7 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             if (!ModelState.IsValid) { return View(vm); }
             if (vm.Id == 0)
             {
+                vm.Slug = "About";
                 await _pageService.CreatePage(vm);
                 _notifyService.Success("About page created successfully");
                 return View();

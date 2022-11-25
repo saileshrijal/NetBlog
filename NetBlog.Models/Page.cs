@@ -13,6 +13,6 @@ namespace NetBlog.Models
         public string? Description { get; set; }
         public string? ShortDescription { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public string? Slug { get; set; } = "About";
+        public string? Slug { get; set; }
     }
 }
