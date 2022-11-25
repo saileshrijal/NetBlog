@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetBlog.Repositories.Interfaces;
+using NetBlog.ViewModels;
 
 namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
@@ -17,8 +18,27 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             _notifyService = notifyService; 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> About()
         {
+            var page = await _unitOfWork.Page.GetBy(x => x.Slug == "About");
+            var vm = new PageViewModel(page);
+            return View(vm);
+        }
+
+        public async Task<IActionResult> About(PageViewModel vm)
+        {
+            if (!ModelState.IsValid) { return View(vm); }
+            var page = new PageViewModel().ConvertViewModel(vm);
+            if (vm.Id == 0)
+            {
+                await _unitOfWork.Page.Create(page);
+                await _unitOfWork.SaveAsync();
+                return View();
+            }
+            page.Title = vm.Title;
+            page.Description = vm.Description;
+            page.ShortDescription = vm.ShortDescription;
+            await _unitOfWork.SaveAsync();
             return View();
         }
     }
