@@ -12,7 +12,6 @@ namespace NetBlog.Web.Controllers
             return View();
         }
 
-        [HttpGet("NotFound")]
         public IActionResult NotFound()
         {
             return View();

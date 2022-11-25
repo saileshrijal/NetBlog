@@ -1,13 +1,8 @@
-
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using NetBlog.Data;
 using NetBlog.Models;
 using NetBlog.Repositories.Implementations;
@@ -16,8 +11,7 @@ using NetBlog.Services.Implementations;
 using NetBlog.Services.Interfaces;
 using NetBlog.Utilities.Implementations;
 using NetBlog.Utilities.Interfaces;
-using System;
-using System.Security.Policy;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +49,14 @@ var app = builder.Build();
         await next();
         if (context.Response.StatusCode == 404)
         {
-            context.Request.Path = "/NotFound";
+            if (context.User.Identity.IsAuthenticated)
+            {
+                context.Request.Path = "/Dashboard/Error/NotFound";
+            }
+            else
+            {
+                context.Request.Path = "/Error/NotFound";
+            }
             await next();
         }
     });
