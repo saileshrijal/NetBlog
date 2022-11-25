@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Dashboard\Views\Page\" />
     <Folder Include="wwwroot\user-img\" />
   </ItemGroup>
 
