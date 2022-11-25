@@ -14,6 +14,7 @@ namespace NetBlog.Models
         public string? Description { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string? UserId { get; set; }
+        public string? Slug { get; set; }
         public ApplicationUser? User { get; set; }
 
         //navigation properties

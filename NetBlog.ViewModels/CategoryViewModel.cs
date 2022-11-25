@@ -16,6 +16,7 @@ namespace NetBlog.ViewModels
         public string? Title { get; set; }
         public string? Description { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public string? Slug { get; set; }
         public string? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
@@ -31,6 +32,7 @@ namespace NetBlog.ViewModels
             CreatedDate = model.CreatedDate;
             UserId = model.UserId;
             User = model.User;
+            Slug = model.Slug;
         }
 
         public Category ConvertViewModel(CategoryViewModel model)
@@ -42,7 +44,8 @@ namespace NetBlog.ViewModels
                 Description = model.Description,
                 CreatedDate = model.CreatedDate,
                 UserId = model.UserId,
-                User = model.User
+                User = model.User,
+                Slug = model.Slug
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using NetBlog.Models;
+﻿using Microsoft.Extensions.Hosting;
+using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
 using NetBlog.Services.Interfaces;
 using NetBlog.ViewModels;
@@ -22,6 +23,10 @@ namespace NetBlog.Services.Implementations
         public async Task CreateCategory(CategoryViewModel vm)
         {
             var model = new CategoryViewModel().ConvertViewModel(vm);
+            if (vm.Title != null)
+            {
+                model.Slug = vm.Title.Trim().ToLower().Replace(' ', '-');
+            }
             await _unitOfWork.Category.Create(model);
             await _unitOfWork.SaveAsync();
         }
