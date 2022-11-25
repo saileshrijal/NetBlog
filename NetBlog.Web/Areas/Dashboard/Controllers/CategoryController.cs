@@ -10,17 +10,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Dashboard")]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
-        private readonly ICategoryService _categoryService;
-        private readonly INotyfService _notifyService;
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public CategoryController(ICategoryService categoryService, INotyfService notifyService, UserManager<ApplicationUser> userManager)
+        public CategoryController(UserManager<ApplicationUser> userManager, INotyfService notifyService, IUserService userService, ICategoryService categoryService, IPageService pageService, IWebHostEnvironment webHostEnvironment, IPostService postService) : base(userManager, notifyService, userService, categoryService, pageService, webHostEnvironment, postService)
         {
-            _categoryService = categoryService;
-            _notifyService = notifyService;
-            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -39,8 +32,8 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Create(CategoryViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
-            var loggedInUserId = _userManager.GetUserId(HttpContext.User);
-            vm.UserId = loggedInUserId;
+            var loggedInUser = await GetLoggedInUser();
+            vm.UserId = loggedInUser.Id;
             await _categoryService.CreateCategory(vm);
             _notifyService.Success("Category Created Successfully");
             return RedirectToAction(nameof(Index));

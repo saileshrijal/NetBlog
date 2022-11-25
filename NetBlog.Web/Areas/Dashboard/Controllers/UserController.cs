@@ -12,25 +12,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
     [Authorize]
     [Area("Dashboard")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        private readonly IUserService _userService;
-        public INotyfService _notifyService { get; }
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IWebHostEnvironment _webHost;
-
-        public UserController(IUserService userService, 
-            INotyfService notifyService, 
-            IWebHostEnvironment webHostEnvironment,
-            UserManager<ApplicationUser> userManager,
-            IWebHostEnvironment webHost)
+        public UserController(UserManager<ApplicationUser> userManager, INotyfService notifyService, IUserService userService, ICategoryService categoryService, IPageService pageService, IWebHostEnvironment webHostEnvironment, IPostService postService) : base(userManager, notifyService, userService, categoryService, pageService, webHostEnvironment, postService)
         {
-            _userService = userService;
-            _notifyService = notifyService;
-            _webHostEnvironment = webHostEnvironment;
-            _userManager = userManager;
-            _webHost = webHost;
         }
 
         [Authorize(Roles = "Admin")]
@@ -127,8 +112,8 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var loggedInUserId = _userManager.GetUserId(HttpContext.User);
-            var profileVM = await _userService.GetUserProfileById(loggedInUserId);
+            var loggedInUser = await GetLoggedInUser();
+            var profileVM = await _userService.GetUserProfileById(loggedInUser.Id);
             return View(profileVM);
         }
 
@@ -136,11 +121,11 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Profile(ProfileViewModel vm) 
         {
             if (!ModelState.IsValid){ return View(vm); }
-            var loggedInUserId = _userManager.GetUserId(HttpContext.User);
-            var profileVM = await _userService.GetUserProfileById(loggedInUserId);
+            var loggedInUser = await GetLoggedInUser();
+            var profileVM = await _userService.GetUserProfileById(loggedInUser.Id);
             if (vm.ProfilePicture != null)
             {
-                profileVM.ProfilePictureUrl = FileHelper.UploadImage(vm.ProfilePicture, _webHost,"user-img");
+                profileVM.ProfilePictureUrl = FileHelper.UploadImage(vm.ProfilePicture, _webHostEnvironment,"user-img");
             }
             else
             {

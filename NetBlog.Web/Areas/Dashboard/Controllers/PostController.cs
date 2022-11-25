@@ -13,31 +13,18 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
     [Authorize]
-    public class PostController : Controller
+    public class PostController : BaseController
     {
-        private readonly ICategoryService _categoryService;
-        private readonly INotyfService _notifyService;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IPostService _postService;
-
-        public PostController(IPostService postService, IWebHostEnvironment webHostEnvironment, ICategoryService categoryService, IUnitOfWork unitOfWork, INotyfService notifyService, UserManager<ApplicationUser> userManager)
+        public PostController(UserManager<ApplicationUser> userManager, INotyfService notifyService, IUserService userService, ICategoryService categoryService, IPageService pageService, IWebHostEnvironment webHostEnvironment, IPostService postService) : base(userManager, notifyService, userService, categoryService, pageService, webHostEnvironment, postService)
         {
-            _notifyService = notifyService;
-            _userManager = userManager;
-            _unitOfWork = unitOfWork;
-            _categoryService = categoryService;
-            _webHostEnvironment = webHostEnvironment;
-            _postService = postService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
-            var roles = await _userManager.GetRolesAsync(loggedInUser);
+            var loggedInUser = await GetLoggedInUser();
+            var role = await GetRoleOfUser(loggedInUser);
             var vm = new List<PostViewModel>();
-            if (roles[0] == "Admin")
+            if (role == "Admin")
             {
                 vm = await _postService.GetPosts();
             }
@@ -67,8 +54,8 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Create(PostViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
-            var userId = _userManager.GetUserId(HttpContext.User);
-            vm.UserId = userId;
+            var loggedInUser = await GetLoggedInUser();
+            vm.UserId = loggedInUser.Id;
             if(vm.Thumbnail != null)
             {
                 vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "thumbnails");
@@ -81,15 +68,15 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var loggedInUser = await _userManager.GetUserAsync(HttpContext.User);
-            var roles = await _userManager.GetRolesAsync(loggedInUser);
+            var loggedInUser = await GetLoggedInUser();
+            var role = await GetRoleOfUser(loggedInUser);
             var postVM = await _postService.GetPost(id);
             if (postVM.Id == 0) 
             {
                 _notifyService.Error("Post not found");
                 return RedirectToAction(nameof(Index)); 
             }
-            if(loggedInUser.Id != postVM.UserId && roles[0] != "Admin")
+            if(loggedInUser.Id != postVM.UserId && role != "Admin")
             {
                 _notifyService.Error("You are not authorized");
                 return View(nameof(Index));

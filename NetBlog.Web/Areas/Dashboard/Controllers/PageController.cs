@@ -1,6 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
 using NetBlog.Services.Interfaces;
 using NetBlog.ViewModels;
@@ -9,14 +11,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
     [Authorize(Roles ="Admin")]
-    public class PageController : Controller
+    public class PageController : BaseController
     {
-        private INotyfService _notifyService;
-        private readonly IPageService _pageService;
-        public PageController(INotyfService notifyService, IPageService pageService)
+        public PageController(UserManager<ApplicationUser> userManager, INotyfService notifyService, IUserService userService, ICategoryService categoryService, IPageService pageService, IWebHostEnvironment webHostEnvironment, IPostService postService) : base(userManager, notifyService, userService, categoryService, pageService, webHostEnvironment, postService)
         {
-            _notifyService = notifyService; 
-            _pageService = pageService;
         }
 
         [HttpGet]
