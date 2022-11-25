@@ -49,9 +49,12 @@ var app = builder.Build();
         await next();
         if (context.Response.StatusCode == 404)
         {
-            if (context.User.Identity.IsAuthenticated)
+            if (context.User.Identity!.IsAuthenticated)
             {
-                context.Request.Path = "/Dashboard/Error/NotFound";
+                if (context.Request.Path.StartsWithSegments("/Dashboard"))
+                {
+                    context.Request.Path = "/Dashboard/Error/NotFound";
+                }
             }
             else
             {

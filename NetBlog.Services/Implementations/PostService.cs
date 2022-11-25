@@ -50,7 +50,7 @@ namespace NetBlog.Services.Implementations
             }
 
             post.PostCategories = new List<PostCategory>();
-            foreach (var categoryId in selectedCateogries)
+            foreach (var categoryId in selectedCateogries!)
             {
                 post.PostCategories?.Add(new PostCategory
                 {
