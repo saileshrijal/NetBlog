@@ -7,7 +7,7 @@ using NetBlog.ViewModels;
 namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
-    [Authorize("Admin")]
+    [Authorize(Roles ="Admin")]
     public class PageController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -18,13 +18,19 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             _notifyService = notifyService; 
         }
 
+        [HttpGet]
         public async Task<IActionResult> About()
         {
             var page = await _unitOfWork.Page.GetBy(x => x.Slug == "About");
-            var vm = new PageViewModel(page);
+            var vm = new PageViewModel();
+            if (page != null)
+            {
+                vm = new PageViewModel(page);
+            }
             return View(vm);
         }
 
+        [HttpPost]
         public async Task<IActionResult> About(PageViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
@@ -33,12 +39,15 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             {
                 await _unitOfWork.Page.Create(page);
                 await _unitOfWork.SaveAsync();
+                _notifyService.Success("About page created successfully");
                 return View();
             }
             page.Title = vm.Title;
             page.Description = vm.Description;
             page.ShortDescription = vm.ShortDescription;
+            _unitOfWork.Page.Edit(page);
             await _unitOfWork.SaveAsync();
+            _notifyService.Success("About page updated successfully");
             return View();
         }
     }
