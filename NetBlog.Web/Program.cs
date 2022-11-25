@@ -42,6 +42,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<IPostService, PostService>();
+    builder.Services.AddScoped<IPageService, PageService>();
     builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 }
