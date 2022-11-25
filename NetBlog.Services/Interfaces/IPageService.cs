@@ -9,7 +9,7 @@ namespace NetBlog.Services.Interfaces
 {
     public interface IPageService
     {
-        Task<PageViewModel> GetPage(string Slug);
+        Task<PageViewModel> GetPage(string slug);
         Task CreatePage(PageViewModel vm);
         Task UpdatePage(PageViewModel vm);
     }

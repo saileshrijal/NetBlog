@@ -1,5 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model PageViewModel
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+        <a class="btn btn-primary" asp-controller="Post" asp-action="Index"><i class="fa fa-arrow-left"></i> Go Back</a>
+    </h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Privacy Policy</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Page" asp-action="PrivacyPolicy">
+                <input asp-for="Id" type="hidden" />
+                <input asp-for="CreatedDate" type="hidden" />
+                <input asp-for="Slug" type="hidden" />
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" asp-for="Title" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                </div>
+                <div class="form-group">
+                    <label>Short Description</label>
+                    <input type="text" asp-for="ShortDescription" class="form-control" />
+                    <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
 }

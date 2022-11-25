@@ -24,9 +24,9 @@ namespace NetBlog.Services.Implementations
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<PageViewModel> GetPage(string Slug)
+        public async Task<PageViewModel> GetPage(string slug)
         {
-            var model = await _unitOfWork.Page.GetBy(x => x.Slug == "About");
+            var model = await _unitOfWork.Page.GetBy(x => x.Slug == slug);
             var vm = new PageViewModel();
             if(model != null)
             {
