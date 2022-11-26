@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetBlog.Services.Interfaces;
 using NetBlog.ViewModels;
+using X.PagedList;
 
 namespace NetBlog.Web.Controllers
 {
@@ -13,10 +14,12 @@ namespace NetBlog.Web.Controllers
             _postService = postService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var listOfPostsVM = await _postService.GetPublishedPosts();
-            return View(listOfPostsVM);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(await listOfPostsVM.ToPagedListAsync(pageNumber,pageSize));
         }
 
         public async Task<IActionResult> Post(string id)
