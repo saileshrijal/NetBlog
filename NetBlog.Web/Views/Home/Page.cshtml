@@ -8,7 +8,7 @@
                     <h2 class="underscore">@Model.Page?.Title</h2>
                     <p class="sup-header">@Model.Page?.ShortDescription</p>
                     <div class="line"></div>
-                    <img src="img/meeting-2284501_1920.jpg" class="d-block w-100 mb-5" alt="..." />
+                    <img src="~/img/meeting-2284501_1920.jpg" class="d-block w-100 mb-5" alt="..." />
                     <div>
                         @Html.Raw(Model.Page?.Description)
                     </div>
@@ -37,6 +37,7 @@
                             </div>
                         }
                     }
+
                     <a class="main-button" asp-controller="Blog" asp-action="Index">View all posts</a>
                     @*<div class="popular pt-5">
                         <h4 class="mb-3">READ MOST POPULAR ARTICLES</h4>

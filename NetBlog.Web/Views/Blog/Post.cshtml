@@ -1,23 +1,30 @@
-﻿@model PostViewModel
-
+﻿@model BlogPostViewModel
 <main>
     <div class="container">
         <div class="row mainmargin">
             <div class="single-post col-md-8">
-                <h2 class="underscore">@Model.Title</h2>
+                <h2 class="underscore">@Model.Post?.Title</h2>
                 <div class="post-meta">
-                    <span><i class="far fa-user"></i> Posted by @Model.User?.FirstName @Model.User?.LastName</span><span><i class="far fa-calendar"></i> @Model.CreatedDate</span><span><i class="fa fa-gear"></i> @Model.PostCategories?.FirstOrDefault()?.Category?.Title</span>
+                    <span><i class="far fa-user"></i> Posted by @Model.Post?.User?.FirstName @Model.Post?.User?.LastName</span><span><i class="far fa-calendar"></i> @Model.Post?.CreatedDate</span><span><i class="fa fa-gear"></i> @Model.Post?.PostCategories?.FirstOrDefault()?.Category?.Title</span>
                 </div>
-                @if(Model.ThumbnailUrl==null){
+                @if (Model.Post?.ThumbnailUrl == null)
+                {
                     <img src="~/thumbnails/default.png" alt="">
                 }
                 else{
-                    <img src="~/thumbnails/@Model.ThumbnailUrl" alt="">
+                    <img src="~/thumbnails/@Model.Post?.ThumbnailUrl" alt="">
                 }
                 <div>
-                    @Html.Raw(Model.Description)
+                    @Html.Raw(Model.Post?.Description)
                 </div>
                 <div class="line"></div>
+                <div class="share">
+                    <a class="main-button" href="https://www.facebook.com/sharer/sharer.php?u=@(Context.Request.Path.ToUriComponent)"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
+                    <a class="main-button" href=""> <i class="fab fa-google-plus-g"></i> GOOGLE+</a>
+                    <a class="main-button" href=""><i class="fab fa-twitter"></i> TWITTER</a>
+                    <a class="main-button" href=""><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
+                    <a class="main-button" href=""><i class="fab fa-pinterest-p"></i> PINTEREST</a>
+                </div>
                 @*<form id="commentForm">
                     <!-- Message input -->
                     <div class="mb-3">
@@ -61,29 +68,19 @@
                 </div>
                 <div class="recent-posts pt-5">
                     <h4 class="mb-3">RECENT POSTS</h4>
-                    <div class="post-item">
-                        <a href="single-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                        <div class="post-meta">
-                            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
-                        </div>
-                        <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
-                    </div>
-                    <div class="post-item">
-                        <a href="single-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                        <div class="post-meta">
-                            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
-                        </div>
-                        <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
-                    </div>
-                    <div class="post-item">
-                        <a href="single-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                        <div class="post-meta">
-                            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
-                        </div>
-                        <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
-                    </div>
-                    <a class="main-button">View all posts</a>
-                  
+                    @if(Model.RecentPosts!=null){
+                        foreach (var post in Model.RecentPosts)
+                        {
+                            <div class="post-item">
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="post-title">@post.Title</a>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate</span><span><i class="fa fa-gear"></i> @post.PostCategories?.FirstOrDefault()?.Category?.Title</span>
+                                </div>
+                                <p class="post-content">@post.ShortDescription</p>
+                            </div>
+                        }
+                    }
+                    <a class="main-button" asp-controller="Blog" asp-action="Index">View all posts</a>
                 </div>
             </div>
         </div>

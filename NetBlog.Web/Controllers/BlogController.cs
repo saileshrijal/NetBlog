@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetBlog.Services.Interfaces;
+using NetBlog.ViewModels;
 
 namespace NetBlog.Web.Controllers
 {
@@ -24,12 +25,16 @@ namespace NetBlog.Web.Controllers
             {
                 return StatusCode(404);
             }
-            var postVM = await _postService.GetPublishedPost(id);
-            if (postVM == null)
+            var vm = new BlogPostViewModel()
+            {
+                Post = await _postService.GetPublishedPost(id),
+                RecentPosts = await _postService.GetRecentPosts()
+            };
+            if (vm.Post == null)
             {
                 return StatusCode(404);
             }
-            return View(postVM);
+            return View(vm);
         }
     }
 }
