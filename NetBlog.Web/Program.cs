@@ -55,6 +55,10 @@ var app = builder.Build();
                 {
                     context.Request.Path = "/Dashboard/Error/NotFound";
                 }
+                else
+                {
+                    context.Request.Path = "/NotFound";
+                }
             }
             else
             {
