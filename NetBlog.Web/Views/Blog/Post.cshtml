@@ -1,8 +1,9 @@
 ﻿@model BlogPostViewModel
 @{
-    var httpAccessor = new HttpContextAccessor();
-    var currentUrl = Context.Request.PathBase.Value;
-    var hell = "";
+    //Get request from Current HttpContext
+    var request = Context.Request;
+    var currentURL = $"{request.Scheme}://{request.Host}{request.Path}";
+    var strings = "";
 }
 <main>
     <div class="container">
@@ -24,11 +25,10 @@
                 </div>
                 <div class="line"></div>
                 <div class="share">
-                    <a class="main-button" href="https://www.facebook.com/sharer/sharer.php?u=@currentUrl"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
-                    <a class="main-button" href=""> <i class="fab fa-google-plus-g"></i> GOOGLE+</a>
-                    <a class="main-button" href=""><i class="fab fa-twitter"></i> TWITTER</a>
-                    <a class="main-button" href=""><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
-                    <a class="main-button" href=""><i class="fab fa-pinterest-p"></i> PINTEREST</a>
+                    <a class="main-button" href="https://www.facebook.com/sharer/sharer.php?u=@currentURL"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
+                    <a class="main-button" href="https://twitter.com/share?text=@Model.Post?.Title&url=@currentURL"> <i class="fab fa-google-plus-g"></i> TWITTER</a>
+                    <a class="main-button" href="https://www.linkedin.com/shareArticle?mini=true&url=@currentURL&title=@Model.Post?.Title"><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
+                    <a class="main-button" href="http://pinterest.com/pin/create/link/?url=@currentURL"><i class="fab fa-pinterest-p"></i> PINTEREST</a>
                 </div>
                 @*<form id="commentForm">
                     <!-- Message input -->
