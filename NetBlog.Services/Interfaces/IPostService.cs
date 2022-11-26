@@ -17,5 +17,7 @@ namespace NetBlog.Services.Interfaces
         Task DeletePost(int id);
         Task<List<PostViewModel>> GetRecentPosts();
         Task<List<PostViewModel>> GetBannerPosts();
+        Task<List<PostViewModel>> GetPublishedPosts();
+
     }
 }

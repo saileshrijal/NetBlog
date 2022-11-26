@@ -17,7 +17,7 @@
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-offset="82">
     <header id="home">
-        <nav id="#navbar" class="navbar @(ViewContext.RouteData.Values["Action"]?.ToString()=="Index"?"":"dark") navbar-expand-lg position-fixed top-0 w-100 py-3">
+        <nav id="#navbar" class="navbar @(ViewContext.RouteData.Values["Action"]?.ToString()=="Index"?"":"dark") @(ViewContext.RouteData.Values["Controller"]?.ToString()=="Blog"?"dark":"") navbar-expand-lg position-fixed top-0 w-100 py-3">
             <div class="container">
                 <a class="navbar-brand" asp-action="Index" asp-controller="Home"><img src="~/img/NetBlogLogo.png" alt="" height="40"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
                         <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString()=="About"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="About">about</a>
                         <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString()=="Contact"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="Contact">contact</a>
                         <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString()=="PrivacyPolicy"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="PrivacyPolicy">Privacy Policy</a>
-                        <a class="nav-link" href="blog.html">Blog</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString()=="Blog"?"active":"")" asp-action="Index" asp-controller="Blog">Blog</a>
                     </div>
                 </div>
             </div>

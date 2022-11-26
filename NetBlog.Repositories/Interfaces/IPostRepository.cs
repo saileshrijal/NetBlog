@@ -13,5 +13,6 @@ namespace NetBlog.Repositories.Interfaces
         Task<List<Post>> GetAllPostByUserId(string userId);
         Task<List<Post>> GetRecentPosts();
         Task<List<Post>> GetBannerPosts();
+        Task<List<Post>> GetAllPublishedPosts();
     }
 }

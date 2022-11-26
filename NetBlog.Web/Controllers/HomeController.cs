@@ -26,7 +26,6 @@ namespace NetBlog.Web.Controllers
             return View(vm);
         }
 
-        [HttpGet("{id}")]
         public async Task<IActionResult> Page(string id)
         {
             var pageVM = await _pageService.GetPage(id);
