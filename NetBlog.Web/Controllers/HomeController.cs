@@ -31,5 +31,11 @@ namespace NetBlog.Web.Controllers
             var pageVM = await _pageService.GetPage(id);
             return View(pageVM);
         }
+
+        [HttpGet("/NotFound")]
+        public IActionResult NotFound()
+        {
+            return View();
+        }
     }
 }

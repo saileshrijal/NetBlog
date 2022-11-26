@@ -58,7 +58,7 @@ var app = builder.Build();
             }
             else
             {
-                context.Request.Path = "/Error/NotFound";
+                context.Request.Path = "/NotFound";
             }
             await next();
         }
