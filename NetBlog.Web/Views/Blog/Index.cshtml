@@ -28,7 +28,7 @@
                                             <span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span>
                                         }
                                     </p>
-                                    <a href="./single-post.html" class="main-button">Read More</a>
+                                    <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="main-button">Read More</a>
                                 </div>
                             </div>
                         }

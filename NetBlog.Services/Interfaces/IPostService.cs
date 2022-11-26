@@ -18,6 +18,6 @@ namespace NetBlog.Services.Interfaces
         Task<List<PostViewModel>> GetRecentPosts();
         Task<List<PostViewModel>> GetBannerPosts();
         Task<List<PostViewModel>> GetPublishedPosts();
-
+        Task<PostViewModel> GetPublishedPost(string slug);
     }
 }

@@ -128,6 +128,17 @@ namespace NetBlog.Services.Implementations
             return listOfPostsVM;
         }
 
+        public async Task<PostViewModel> GetPublishedPost(string slug)
+        {
+            var model = await _unitOfWork.Post.GetPublishedPost(slug);
+            var vm = new PostViewModel();
+            if (model != null)
+            {
+                vm = new PostViewModel(model);
+            }
+            return vm;
+        }
+
         public async Task<List<PostViewModel>> GetPublishedPosts()
         {
             var listOfPublishedPosts = await _unitOfWork.Post.GetAllPublishedPosts();
