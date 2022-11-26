@@ -23,16 +23,16 @@ namespace NetBlog.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return StatusCode(404);
+                return RedirectToAction(nameof(NotFound));
             }
             var vm = new BlogPostViewModel()
             {
                 Post = await _postService.GetPublishedPost(id),
                 RecentPosts = await _postService.GetRecentPosts()
             };
-            if (vm.Post == null)
+            if (vm.Post?.Id == 0)
             {
-                return StatusCode(404);
+                return RedirectToAction(nameof(NotFound));
             }
             return View(vm);
         }

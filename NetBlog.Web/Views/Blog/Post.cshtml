@@ -1,4 +1,9 @@
 ﻿@model BlogPostViewModel
+@{
+    var httpAccessor = new HttpContextAccessor();
+    var currentUrl = Context.Request.PathBase.Value;
+    var hell = "";
+}
 <main>
     <div class="container">
         <div class="row mainmargin">
@@ -19,7 +24,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="share">
-                    <a class="main-button" href="https://www.facebook.com/sharer/sharer.php?u=@(Context.Request.Path.ToUriComponent)"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
+                    <a class="main-button" href="https://www.facebook.com/sharer/sharer.php?u=@currentUrl"><i class="fab fa-facebook-f"></i> FACEBOOK</a>
                     <a class="main-button" href=""> <i class="fab fa-google-plus-g"></i> GOOGLE+</a>
                     <a class="main-button" href=""><i class="fab fa-twitter"></i> TWITTER</a>
                     <a class="main-button" href=""><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
