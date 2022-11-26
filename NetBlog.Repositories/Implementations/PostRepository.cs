@@ -24,12 +24,22 @@ namespace NetBlog.Repositories.Implementations
 
         public override async Task<List<Post>> GetAll()
         {
-            return await _context.Posts.Include(x => x.User).Include(x=>x.PostCategories).ThenInclude(x=>x.Category).ToListAsync();
+            return await _context.Posts.Include(x => x.User).Include(x=>x.PostCategories).ThenInclude(x=>x.Category).OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
 
         public async Task<List<Post>> GetAllPostByUserId(string userId)
         {
-            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x=>x.UserId==userId).ToListAsync();
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x=>x.UserId==userId).OrderByDescending(x=>x.CreatedDate).ToListAsync();
+        }
+
+        public async Task<List<Post>> GetRecentPosts()
+        {
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x => x.Status == true).OrderByDescending(x => x.CreatedDate).Take(3).ToListAsync();
+        }
+
+        public async Task<List<Post>> GetBannerPosts()
+        {
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x => x.Status == true && x.IsBanner==true).OrderByDescending(x => x.CreatedDate).Take(3).ToListAsync();
         }
     }
 }

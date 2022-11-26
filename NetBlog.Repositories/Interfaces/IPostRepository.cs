@@ -11,5 +11,7 @@ namespace NetBlog.Repositories.Interfaces
     public interface IPostRepository:IGenericRepository<Post>
     {
         Task<List<Post>> GetAllPostByUserId(string userId);
+        Task<List<Post>> GetRecentPosts();
+        Task<List<Post>> GetBannerPosts();
     }
 }

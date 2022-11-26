@@ -69,6 +69,13 @@ namespace NetBlog.Services.Implementations
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<List<PostViewModel>> GetBannerPosts()
+        {
+            var listOfBannerPosts = await _unitOfWork.Post.GetBannerPosts();
+            var listOfBannerPostsVM = ConvertModelToViewModelList(listOfBannerPosts);
+            return listOfBannerPostsVM;
+        }
+
         public async Task<PostViewModel> GetPost(int id)
         {
             try
@@ -119,6 +126,13 @@ namespace NetBlog.Services.Implementations
             var listOfPosts = await _unitOfWork.Post.GetAllPostByUserId(userId);
             var listOfPostsVM = ConvertModelToViewModelList(listOfPosts);
             return listOfPostsVM;
+        }
+
+        public async Task<List<PostViewModel>> GetRecentPosts()
+        {
+            var listOfRecentPosts =  await _unitOfWork.Post.GetRecentPosts();
+            var listOfRecentPostsVM = ConvertModelToViewModelList(listOfRecentPosts);
+            return listOfRecentPostsVM;
         }
 
         public async Task UpdatePost(PostViewModel vm)
