@@ -1,32 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetBlog.Web.Models;
-using System.Diagnostics;
+using NetBlog.Services.Interfaces;
 
 namespace NetBlog.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IPageService _pageService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IPageService pageService)
         {
-            _logger = logger;
+            _pageService = pageService;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Page(string id)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var pageVM = await _pageService.GetPage(id);
+            return View(pageVM);
         }
     }
 }
