@@ -28,8 +28,12 @@ namespace NetBlog.Web.Controllers
 
         public async Task<IActionResult> Page(string id)
         {
-            var pageVM = await _pageService.GetPage(id);
-            return View(pageVM);
+            var vm = new BlogPageViewModel()
+            {
+                Page = await _pageService.GetPage(id),
+                RecentPosts = await _postService.GetRecentPosts()
+            };
+            return View(vm);
         }
 
         [HttpGet("/NotFound")]
