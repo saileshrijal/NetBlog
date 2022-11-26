@@ -56,11 +56,10 @@
                         }
                         <div class="card-img-overlay p-3">
                             <div class="text-overlay">
-                                @*<p class="card-text text-uppercase">Most Popular</p>*@
                                 <h5 class="card-title text-uppercase">@post.Title</h5>
                                 <div class="line"></div>
                                 <div class="card-text autor-data d-flex pb-3">
-                                    <p class="post-autor text-uppercase">Posted by @post.User?.FirstName @post.User?.LastName&nbsp;</p><p class="post-data text-uppercase">| @post.CreatedDate</p>
+                                    <p class="post-autor text-uppercase">Posted by @post.User?.FirstName @post.User?.LastName&nbsp;</p><p class="post-data text-uppercase">| @post.CreatedDate?.ToString("yyyy/mm/dd")</p>
                                 </div>
                                 <a href="" class="card-button">Read article</a>
                             </div>
@@ -80,7 +79,7 @@
                     {
                         <div class="post-item">
                             <div class="post-meta">
-                                <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy:mm:dd")</span>
+                                <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy/mm/dd")</span>
                             </div>
                             <a href="single-post.html" class="post-title">@post.Title</a>
                             <p class="post-content">@post.ShortDescription</p>

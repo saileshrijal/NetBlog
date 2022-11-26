@@ -79,7 +79,7 @@
                             <div class="post-item">
                                 <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="post-title">@post.Title</a>
                                 <div class="post-meta">
-                                    <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate</span><span><i class="fa fa-gear"></i> @post.PostCategories?.FirstOrDefault()?.Category?.Title</span>
+                                    <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy/mm/dd")</span><span><i class="fa fa-gear"></i> @post.PostCategories?.FirstOrDefault()?.Category?.Title</span>
                                 </div>
                                 <p class="post-content">@post.ShortDescription</p>
                             </div>
