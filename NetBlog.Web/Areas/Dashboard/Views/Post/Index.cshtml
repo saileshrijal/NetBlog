@@ -1,4 +1,7 @@
-﻿@model List<PostViewModel>
+﻿@model IPagedList<PostViewModel>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 @{
     ViewData["Title"] = "Posts";
 }
@@ -80,6 +83,24 @@
                 </div>
             }
         </div>
+        <div class="card-footer row">
+            <div class="col-6">
+                Page @(Model?.PageCount < Model?.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            </div>
+            <div class="col-6 d-flex paginationBtn" style="justify-content:end;">
+                @Html.PagedListPager(Model,page => Url.Action("Index",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+                new PagedListRenderOptions()
+                {
+                ContainerDivClasses = new List<string> {"blog","navigation"},
+                UlElementClasses = new List<string> {"pagination"},
+                LiElementClasses = new List<string> {"page-item","page-link"},
+                ActiveLiElementClass =  "bg-primary text-white",
+                })
+            </div>
+            
+        </div>
     </div>
 
 </div>
@@ -108,6 +129,12 @@
         top:6px!important;
         right:180px;
         z-index:100;
+    }
+
+    .page-link a{
+        text-decoration:none;
+        font-weight:bold;
+        padding:5px;
     }
 
 </style>

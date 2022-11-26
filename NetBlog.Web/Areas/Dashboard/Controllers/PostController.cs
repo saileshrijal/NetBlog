@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
 using NetBlog.Services.Interfaces;
 using NetBlog.Utilities;
 using NetBlog.ViewModels;
+using System.Drawing.Printing;
+using X.PagedList;
 
 namespace NetBlog.Web.Areas.Dashboard.Controllers
 {
@@ -19,7 +22,7 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         {
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var loggedInUser = await GetLoggedInUser();
             var role = await GetRoleOfUser(loggedInUser);
@@ -32,7 +35,9 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
             {
                 vm = await _postService.GetPostsByUserId(loggedInUser.Id);
             }
-            return View(vm);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(await vm.ToPagedListAsync(pageNumber, pageSize));
         }
 
         [HttpGet]
