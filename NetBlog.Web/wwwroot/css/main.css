@@ -520,13 +520,15 @@ nav .nav-link:hover {
 }
 
 .all-posts .post-item .post-img {
-  width: 100%;
-  height: 350px;
-  overflow: hidden;
+    height: 350px;
+    overflow: hidden;
+    width: 300px;
 }
 
 .all-posts .post-item .post-img img {
   height: 100%;
+  width:100%;
+  object-fit:cover;
 }
 
 .all-posts .post-item .post-main-info .post-title {

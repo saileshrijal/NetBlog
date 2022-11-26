@@ -20,9 +20,14 @@
                                 <div class="post-main-info">
                                     <p class="post-title">@post.Title</p>
                                     <div class="post-meta">
-                                        <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
+                                        <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> 30 07 2021</span>
                                     </div>
                                     <p>@post.ShortDescription</p>
+                                    <p>
+                                        @foreach(var postCategory in post.PostCategories!){
+                                            <span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span>
+                                        }
+                                    </p>
                                     <a href="./single-post.html" class="main-button">Read More</a>
                                 </div>
                             </div>
