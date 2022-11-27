@@ -72,9 +72,11 @@
 
                         </div>
                     </a>
-                    <div class="col-1 text-center btnGroup position-absolute">
+                    <div class="col-1 text-right btnGroup position-absolute">
                         <p class="mr-3 d-inline">
-                            <button class="btn p-0 btn-lg" title="View" asp-action="" asp-controller=""><i class="fas fa-eye"></i></button>
+                            @if(post.Status){
+                                <a class="btn p-0 btn-lg" title="View" asp-area="" asp-action="Post" asp-route-id="@post.Slug" asp-controller="Blog" target><i class="fas fa-eye"></i></a>
+                            }
                             <form method="post" asp-action="Delete" asp-controller="Post" asp-route-id="@post.Id" class="d-inline">
                                 <button type="button" class="btn p-0 btn-lg deleteBtn"><i class="fas fa-trash"></i></button>
                             </form>
@@ -83,23 +85,24 @@
                 </div>
             }
         </div>
-        <div class="card-footer row">
-            <div class="col-6">
-                Page @(Model?.PageCount < Model?.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-6">
+                    Page @(Model?.PageCount < Model?.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
+                </div>
+                <div class="col-6 d-flex paginationBtn" style="justify-content:end;">
+                    @Html.PagedListPager(Model,page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+                    new PagedListRenderOptions()
+                    {
+                    ContainerDivClasses = new List<string> {"blog","navigation"},
+                    UlElementClasses = new List<string> {"pagination"},
+                    LiElementClasses = new List<string> {"page-item","page-link"},
+                    ActiveLiElementClass =  "bg-primary text-white",
+                    })
+                </div>
             </div>
-            <div class="col-6 d-flex paginationBtn" style="justify-content:end;">
-                @Html.PagedListPager(Model,page => Url.Action("Index",
-                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
-                new PagedListRenderOptions()
-                {
-                ContainerDivClasses = new List<string> {"blog","navigation"},
-                UlElementClasses = new List<string> {"pagination"},
-                LiElementClasses = new List<string> {"page-item","page-link"},
-                ActiveLiElementClass =  "bg-primary text-white",
-                })
-            </div>
-            
         </div>
     </div>
 

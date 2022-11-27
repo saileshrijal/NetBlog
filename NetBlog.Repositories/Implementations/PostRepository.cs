@@ -51,5 +51,10 @@ namespace NetBlog.Repositories.Implementations
         {
             return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).FirstOrDefaultAsync(x => x.Status == true && x.Slug == slug);
         }
+
+        public async Task<List<Post>> SearchPublishedPosts(string searchString)
+        {
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x => x.Status == true).Where(x=>x.Title.StartsWith(searchString)).OrderByDescending(x => x.CreatedDate).ToListAsync();
+        }
     }
 }
