@@ -42,7 +42,10 @@
                                     <p>@post.ShortDescription</p>
                                     <p>
                                         @foreach(var postCategory in post.PostCategories!){
-                                            <span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span>
+                                            <form method="get" asp-action="Index" asp-controller="Blog" class="d-inline">
+                                                <input type="hidden" asp-for="@postCategory.Category.Slug" name="category">
+                                                <button type="submit" class="btn p-0 categoryBtn"><span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span></button>
+                                            </form>
                                         }
                                     </p>
                                     <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="main-button">Read More</a>

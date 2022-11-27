@@ -899,4 +899,8 @@ footer .copyright p a {
     padding-right: 10px;
   }
 }
+
+.categoryBtn:hover {
+    color: gray;
+}
 /*# sourceMappingURL=main.css.map */

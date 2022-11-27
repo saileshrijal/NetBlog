@@ -61,7 +61,7 @@
                                 <div class="card-text autor-data d-flex pb-3">
                                     <p class="post-autor text-uppercase">Posted by @post.User?.FirstName @post.User?.LastName&nbsp;</p><p class="post-data text-uppercase">| @post.CreatedDate?.ToString("yyyy/mm/dd")</p>
                                 </div>
-                                <a href="" class="card-button">Read article</a>
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="card-button">Read article</a>
                             </div>
                         </div>
                     </div>
@@ -81,10 +81,18 @@
                             <div class="post-meta">
                                 <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy/mm/dd")</span>
                             </div>
-                            <a href="single-post.html" class="post-title">@post.Title</a>
+                            <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="post-title">@post.Title</a>
                             <p class="post-content">@post.ShortDescription</p>
                             <div class="post-meta">
-                                <span><i class="fa fa-gear"></i> @post.PostCategories?.FirstOrDefault()?.Category?.Title</span>
+                                <span>
+                                    @foreach (var postCategory in post.PostCategories)
+                                    {
+                                        <form method="get" asp-action="Index" asp-controller="Blog" class="d-inline">
+                                            <input type="hidden" asp-for="@postCategory.Category.Slug" name="category">
+                                            <button type="submit" class="btn p-0 categoryBtn"><span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span></button>
+                                        </form>
+                                    }
+                                </span>
                             </div>
                         </div>
                     }
