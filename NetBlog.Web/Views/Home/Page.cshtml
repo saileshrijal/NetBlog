@@ -15,14 +15,16 @@
                 </div>
             </div>
             <div class="sidebar col-md-4">
-                <div class="input-group">
-                    <div class="form-outline">
-                        <input id="search-input" type="search" id="form1" class="form-control" placeholder="search" />
+                <form method="get" asp-controller="Blog" asp-action="Index">
+                    <div class="input-group">
+                            <div class="form-outline">
+                            <input id="search-input" name="search" type="search" id="form1" class="form-control" placeholder="search" />
+                            </div>
+                            <button id="search-button" type="submit" class="btn dark">
+                                <i class="fas fa-search"></i>
+                            </button>
                     </div>
-                    <button id="search-button" type="button" class="btn dark">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+                </form>
                 <div class="recent-posts pt-5">
                     <h4 class="mb-3">RECENT POSTS</h4>
                     @if(Model.RecentPosts!=null){

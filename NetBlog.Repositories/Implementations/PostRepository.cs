@@ -54,7 +54,7 @@ namespace NetBlog.Repositories.Implementations
 
         public async Task<List<Post>> SearchPublishedPosts(string searchString)
         {
-            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x => x.Status == true).Where(x=>x.Title!.StartsWith(searchString)).OrderByDescending(x => x.CreatedDate).ToListAsync();
+            return await _context.Posts.Include(x => x.User).Include(x => x.PostCategories).ThenInclude(x => x.Category).Where(x => x.Status == true && x.Title!.StartsWith(searchString)).OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
     }
 }

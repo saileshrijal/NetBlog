@@ -14,9 +14,17 @@ namespace NetBlog.Web.Controllers
             _postService = postService;
         }
 
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, string? search)
         {
-            var listOfPostsVM = await _postService.GetPublishedPosts();
+            var listOfPostsVM = new List<PostViewModel>();
+            if(search != null)
+            {
+                listOfPostsVM = await _postService.GetPublishedSearchPosts(search);
+            }
+            else 
+            {
+                listOfPostsVM = await _postService.GetPublishedPosts();
+            }
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(await listOfPostsVM.ToPagedListAsync(pageNumber,pageSize));

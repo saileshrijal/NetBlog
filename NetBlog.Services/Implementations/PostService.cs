@@ -146,7 +146,7 @@ namespace NetBlog.Services.Implementations
             return listOfPublishedPostsVM;
         }
 
-        public async Task<PostViewModel> GetPublishedSearchPosts(string searchString)
+        public async Task<List<PostViewModel>> GetPublishedSearchPosts(string searchString)
         {
             var listOfPublishedPosts = await _unitOfWork.Post.SearchPublishedPosts(searchString);
             var listOfPublishedPostsVM = ConvertModelToViewModelList(listOfPublishedPosts);
@@ -197,5 +197,6 @@ namespace NetBlog.Services.Implementations
         {
             return listOfPosts.Select(x => new PostViewModel(x)).ToList();
         }
+
     }
 }
