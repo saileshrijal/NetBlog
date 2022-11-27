@@ -146,6 +146,18 @@ namespace NetBlog.Services.Implementations
             return listOfPublishedPostsVM;
         }
 
+        public async Task<List<PostViewModel>> GetPublishedPostsByCategory(string categorySlug)
+        {
+            var listOfPosts = await _unitOfWork.PostCategory.SearchPublishedPostsByCategory(categorySlug);
+            var post = new List<Post>();
+            foreach(var item in listOfPosts)
+            {
+                post.Add(item.Post);
+            }
+            var listOfPublishedPostsVM = ConvertModelToViewModelList(post);
+            return listOfPublishedPostsVM;
+        }
+
         public async Task<List<PostViewModel>> GetPublishedSearchPosts(string searchString)
         {
             var listOfPublishedPosts = await _unitOfWork.Post.SearchPublishedPosts(searchString);
@@ -197,6 +209,5 @@ namespace NetBlog.Services.Implementations
         {
             return listOfPosts.Select(x => new PostViewModel(x)).ToList();
         }
-
     }
 }

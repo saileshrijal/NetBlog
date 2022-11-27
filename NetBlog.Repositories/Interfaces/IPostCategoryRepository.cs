@@ -9,5 +9,6 @@ namespace NetBlog.Repositories.Interfaces
 {
     public interface IPostCategoryRepository:IGenericRepository<PostCategory>
     {
+        Task<List<PostCategory>> SearchPublishedPostsByCategory(string categorySlug);
     }
 }

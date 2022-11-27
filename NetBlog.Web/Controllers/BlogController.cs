@@ -14,13 +14,18 @@ namespace NetBlog.Web.Controllers
             _postService = postService;
         }
 
-        public async Task<IActionResult> Index(int? page, string? search)
+        public async Task<IActionResult> Index(int? page, string? search, string? category)
         {
             var listOfPostsVM = new List<PostViewModel>();
             if(search != null)
             {
                 listOfPostsVM = await _postService.GetPublishedSearchPosts(search);
                 ViewBag.SearchString = search;
+            }
+            else if (category != null)
+            {
+                listOfPostsVM = await _postService.GetPublishedPostsByCategory(category);
+                ViewBag.CategoryString = category;
             }
             else 
             {
