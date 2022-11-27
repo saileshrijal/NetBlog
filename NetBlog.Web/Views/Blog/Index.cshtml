@@ -4,8 +4,18 @@
 @using X.PagedList.Web.Common
 <main>
     <div class="container">
-        <div class="row mainmargin">
             <div class="blog col-md-10 mx-auto">
+            <div class="row mainmargin">
+                <form method="get" asp-controller="Blog" asp-action="Index" class="mb-4">
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input id="search-input" name="search" type="search" id="form1" class="form-control" placeholder="search" />
+                        </div>
+                        <button id="search-button" type="submit" class="btn dark">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
                 @if(ViewBag.SearchString !=null){
                     <p class="mb-5">Showing posts matching the search for <b>"@ViewBag.SearchString"</b>. <a asp-action="Index" asp-controller="Blog">See All</a></p>
                     @if(Model.Count==0){
