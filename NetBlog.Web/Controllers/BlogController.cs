@@ -20,6 +20,7 @@ namespace NetBlog.Web.Controllers
             if(search != null)
             {
                 listOfPostsVM = await _postService.GetPublishedSearchPosts(search);
+                ViewBag.SearchString = search;
             }
             else 
             {
@@ -29,6 +30,7 @@ namespace NetBlog.Web.Controllers
             int pageNumber = (page ?? 1);
             return View(await listOfPostsVM.ToPagedListAsync(pageNumber,pageSize));
         }
+
 
         public async Task<IActionResult> Post(string id)
         {

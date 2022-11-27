@@ -1,0 +1,142 @@
+﻿@model IPagedList<PostViewModel>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+<main>
+    <div class="container">
+        <div class="row mainmargin">
+            <div class="blog col-md-10 mx-auto">
+                <div class="all-posts">
+                    @if (Model != null)
+                    {
+                        foreach (var post in Model)
+                        {
+                            <div class="post-item">
+                                <div class="post-img">
+                                    @if (post.ThumbnailUrl == null)
+                                    {
+                                        <img src="~/thumbnails/default.png" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/thumbnails/@post.ThumbnailUrl" alt="">
+                                    }
+                                </div>
+                                <div class="post-main-info">
+                                    <p class="post-title">@post.Title</p>
+                                    <div class="post-meta">
+                                        <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy/mm/dd")</span>
+                                    </div>
+                                    <p>@post.ShortDescription</p>
+                                    <p>
+                                        @foreach (var postCategory in post.PostCategories!)
+                                        {
+                                            <span><i class="fa fa-gear"></i> @postCategory.Category?.Title</span>
+                                        }
+                                    </p>
+                                    <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="main-button">Read More</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <br />
+                <nav aria-label="blog navigation">
+                    Page @(Model?.PageCount < Model?.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model,page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }),
+                    new PagedListRenderOptions()
+                    {
+                    ContainerDivClasses = new List<string> {"blog","navigation"},
+                    UlElementClasses = new List<string> {"pagination"},
+                    LiElementClasses = new List<string> {"page-item","page-link"},
+                    ActiveLiElementClass =  "active",
+                    })
+                </nav>
+            </div>
+            @*<div class="sidebar col-md-4">
+            <div class="input-group">
+            <div class="form-outline">
+            <input id="search-input" type="search" id="form1" class="form-control" placeholder="search" />
+            </div>
+            <button id="search-button" type="button" class="btn dark">
+            <i class="fas fa-search"></i>
+            </button>
+            </div>
+            <div class="recent-posts pt-5">
+            <h4 class="mb-3">RECENT POSTS</h4>
+            <div class="post-item">
+            <a href="simple-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+            <div class="post-meta">
+            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
+            </div>
+            <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
+            </div>
+            <div class="post-item">
+            <a href="simple-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+            <div class="post-meta">
+            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
+            </div>
+            <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
+            </div>
+            <div class="post-item">
+            <a href="simple-post.html" class="post-title">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+            <div class="post-meta">
+            <span><i class="far fa-user"></i> Posted by someone</span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 0 comments</span>
+            </div>
+            <p class="post-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt perspiciatis ex ipsam similique blanditiis. Culpa hic quia...</p>
+            </div>
+            <a class="main-button">View all posts</a>
+            <div class="popular pt-5">
+            <h4 class="mb-3">READ MOST POPULAR ARTICLES</h4>
+            <div class="card bg-dark text-white">
+            <img src="./img/architecture-1857175_1920.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay p-3">
+            <div class="text-overlay">
+            <h5 class="card-title text-uppercase">Lorem, ipsum dolor sit amet consectetur </h5>
+            <div class="line"></div>
+            <div class="card-text article-meta">
+            <span><i class="far fa-user"></i> Posted by someone </span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 300 comments</span>
+            </div>
+            <button class="card-button">Read article</button>
+            </div>
+            </div>
+            </div>
+            <div class="card bg-dark text-white">
+            <img src="./img/castle-1998435_1920.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay p-3">
+            <div class="text-overlay">
+            <h5 class="card-title text-uppercase">Lorem, ipsum dolor sit amet consectetur </h5>
+            <div class="line"></div>
+            <div class="card-text article-meta">
+            <span><i class="far fa-user"></i> Posted by someone </span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 300 comments</span>
+            </div>
+            <button class="card-button">Read article</button>
+            </div>
+            </div>
+            </div>
+            <div class="card bg-dark text-white">
+            <img src="./img/staircase-274614_1920.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay p-3">
+            <div class="text-overlay">
+            <h5 class="card-title text-uppercase">Lorem, ipsum dolor sit amet consectetur </h5>
+            <div class="line"></div>
+            <div class="card-text article-meta">
+            <span><i class="far fa-user"></i> Posted by someone </span><span><i class="far fa-calendar"></i> 30 07 2021</span><span><i class="far fa-comment-alt"></i> 300 comments</span>
+            </div>
+            <button class="card-button">Read article</button>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>*@
+        </div>
+    </div>
+</main>
+
+<style>
+    .page-item a {
+        text-decoration: none;
+    }
+</style>

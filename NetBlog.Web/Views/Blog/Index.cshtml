@@ -6,6 +6,9 @@
     <div class="container">
         <div class="row mainmargin">
             <div class="blog col-md-10 mx-auto">
+                @if(ViewBag.SearchString !=null){
+                    <p class="mb-5">Showing posts matching the search for <b>"@ViewBag.SearchString"</b>. <a asp-action="Index" asp-controller="Blog">See All</a></p>
+                }
                 <div class="all-posts">
                     @if(Model !=null){
                         foreach (var post in Model)
