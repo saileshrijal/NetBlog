@@ -25,20 +25,5 @@ namespace NetBlog.Web.Controllers
             };
             return View(vm);
         }
-
-        public async Task<IActionResult> Page(string id)
-        {
-            var vm = new BlogPageViewModel()
-            {
-                Page = await _pageService.GetPage(id),
-                RecentPosts = await _postService.GetRecentPosts()
-            };
-            return View(vm);
-        }
-
-        public IActionResult NotFound()
-        {
-            return View();
-        }
     }
 }

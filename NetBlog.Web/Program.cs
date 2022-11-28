@@ -57,12 +57,12 @@ var app = builder.Build();
                 }
                 else
                 {
-                    context.Request.Path = "/home/NotFound";
+                    context.Request.Path = "/Page/NotFound";
                 }
             }
             else
             {
-                context.Request.Path = "/home/NotFound";
+                context.Request.Path = "/Page/NotFound";
             }
             await next();
         }
