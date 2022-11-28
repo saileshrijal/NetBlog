@@ -28,9 +28,9 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ms-auto">
                         <a class="nav-link @(Context.Request.Path.StartsWithSegments("/")?"active":"")" asp-action="Index" asp-controller="Home">home</a>
-                        <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString().ToLower()=="about"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="About">about</a>
-                        <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString().ToLower()=="contact"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="Contact">contact</a>
-                        <a class="nav-link @(ViewContext.RouteData.Values["id"]?.ToString().ToLower()=="privacypolicy"?"active":"")" asp-action="Page" asp-controller="Home" asp-route-id="PrivacyPolicy">Privacy Policy</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString().ToLower()=="about"?"active":"")" asp-action="About" asp-controller="Page">about</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString().ToLower()=="contact"?"active":"")" asp-action="Contact" asp-controller="Page">contact</a>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"]?.ToString().ToLower()=="privacypolicy"?"active":"")" asp-action="PrivacyPolicy" asp-controller="Page">Privacy Policy</a>
                         <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString().ToLower()=="blog"?"active":"")" asp-action="Index" asp-controller="Blog">Blog</a>
                     </div>
                 </div>

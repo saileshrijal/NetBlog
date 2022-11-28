@@ -1,0 +1,55 @@
+﻿@model BlogPageViewModel
+
+<main>
+    <div class="container">
+        <div class="row mainmargin">
+            <div class="col-md-8">
+                <div class="about-page">
+                    <h2 class="underscore">@Model.Page?.Title</h2>
+                    <p class="sup-header">@Model.Page?.ShortDescription</p>
+                    <div class="line"></div>
+                    @if (Model.Page?.ThumbnailUrl == null)
+                    {
+                        <img src="~/thumbnails/default.png" class="d-block w-100 mb-5" alt="..." />
+                    }
+                    else
+                    {
+                        <img src="~/page-img/@Model.Page?.ThumbnailUrl" class="d-block w-100 mb-5" alt="..." />
+                    }
+                    <div>
+                        @Html.Raw(Model.Page?.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar col-md-4">
+                <form method="get" asp-controller="Blog" asp-action="Index">
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input id="search-input" name="search" type="search" id="form1" class="form-control" placeholder="search" />
+                        </div>
+                        <button id="search-button" type="submit" class="btn dark">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="recent-posts pt-5">
+                    <h4 class="mb-3">RECENT POSTS</h4>
+                    @if (Model.RecentPosts != null)
+                    {
+                        foreach (var post in Model.RecentPosts)
+                        {
+                            <div class="post-item">
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Slug" class="post-title">@post.Title</a>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> Posted by @post.User?.FirstName @post.User?.LastName</span><span><i class="far fa-calendar"></i> @post.CreatedDate?.ToString("yyyy/mm/dd")</span><span><i class="fa fa-gear"></i> @post.PostCategories?.FirstOrDefault()?.Category?.Title</span>
+                                </div>
+                                <p class="post-content">@post.ShortDescription</p>
+                            </div>
+                        }
+                    }
+                    <a class="main-button" asp-controller="Blog" asp-action="Index">View all posts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
