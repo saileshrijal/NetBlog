@@ -18,20 +18,46 @@
                 <input asp-for="Id" type="hidden" />
                 <input asp-for="CreatedDate" type="hidden" />
                 <input asp-for="Slug" type="hidden" />
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" asp-for="Title" class="form-control" />
-                    <span class="text-danger" asp-validation-for="Title"></span>
-                </div>
-                <div class="form-group">
-                    <label>Short Description</label>
-                    <input type="text" asp-for="ShortDescription" class="form-control" />
-                    <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                <input asp-for="ThumbnailUrl" type="hidden" />
+
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" asp-for="Title" class="form-control" />
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Short Description</label>
+                            <input type="text" asp-for="ShortDescription" class="form-control" />
+                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            @if (Model.ThumbnailUrl == null)
+                            {
+                                <img src="~/thumbnails/default.png" class="img-fluid" id="thumbnailPic" />
+                            }
+                            else
+                            {
+                                <img src="~/page-img/@Model.ThumbnailUrl" class="img-fluid" id="thumbnailPic" />
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
                     <textarea asp-for="Description" class="form-control" rows="5"></textarea>
                     <span class="text-danger" asp-validation-for="Description"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Thumbnail</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" asp-for="Thumbnail">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -45,4 +71,12 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            document.getElementById('thumbnailPic').src = window.URL.createObjectURL(this.files[0])
+        });
+    </script>
 }

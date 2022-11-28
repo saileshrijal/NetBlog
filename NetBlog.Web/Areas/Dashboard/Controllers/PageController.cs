@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetBlog.Models;
 using NetBlog.Repositories.Interfaces;
 using NetBlog.Services.Interfaces;
+using NetBlog.Utilities;
 using NetBlog.ViewModels;
 
 namespace NetBlog.Web.Areas.Dashboard.Controllers
@@ -28,6 +29,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> About(PageViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
+            if (vm.Thumbnail != null)
+            {
+                vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "page-img");
+            }
             if (vm.Id == 0)
             {
                 vm.Slug = "About";
@@ -52,6 +57,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> Contact(PageViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
+            if (vm.Thumbnail != null)
+            {
+                vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "page-img");
+            }
             if (vm.Id == 0)
             {
                 vm.Slug = "Contact";
@@ -75,6 +84,10 @@ namespace NetBlog.Web.Areas.Dashboard.Controllers
         public async Task<IActionResult> PrivacyPolicy(PageViewModel vm)
         {
             if (!ModelState.IsValid) { return View(vm); }
+            if (vm.Thumbnail != null)
+            {
+                vm.ThumbnailUrl = FileHelper.UploadImage(vm.Thumbnail, _webHostEnvironment, "page-img");
+            }
             if (vm.Id == 0)
             {
                 vm.Slug = "PrivacyPolicy";

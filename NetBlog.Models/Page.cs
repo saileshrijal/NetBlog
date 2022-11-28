@@ -14,5 +14,6 @@ namespace NetBlog.Models
         public string? ShortDescription { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string? Slug { get; set; }
+        public string? thumbnailUrl { get; set; }
     }
 }

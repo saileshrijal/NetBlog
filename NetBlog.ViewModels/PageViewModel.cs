@@ -1,4 +1,5 @@
-﻿using NetBlog.Models;
+﻿using Microsoft.AspNetCore.Http;
+using NetBlog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace NetBlog.ViewModels
         public string? ShortDescription { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string? Slug { get; set; }
+        public string? ThumbnailUrl { get; set; }
+        public IFormFile? Thumbnail { get; set; }
 
         public PageViewModel()
         {
@@ -28,6 +31,7 @@ namespace NetBlog.ViewModels
             ShortDescription = model.ShortDescription;
             CreatedDate = model.CreatedDate;
             Slug = model.Slug;
+            ThumbnailUrl = model.thumbnailUrl;
         }
         public Page ConvertViewModel(PageViewModel model)
         {
@@ -39,6 +43,7 @@ namespace NetBlog.ViewModels
                 ShortDescription = model.ShortDescription,
                 CreatedDate = model.CreatedDate,
                 Slug = model.Slug,
+                thumbnailUrl = model.ThumbnailUrl
             };
         }
     }
