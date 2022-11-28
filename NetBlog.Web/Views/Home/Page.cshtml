@@ -8,7 +8,12 @@
                     <h2 class="underscore">@Model.Page?.Title</h2>
                     <p class="sup-header">@Model.Page?.ShortDescription</p>
                     <div class="line"></div>
-                    <img src="~/img/meeting-2284501_1920.jpg" class="d-block w-100 mb-5" alt="..." />
+                    @if(Model.Page?.ThumbnailUrl==null){
+                        <img src="~/thumbnails/default.png" class="d-block w-100 mb-5" alt="..." />
+                    }
+                    else{
+                        <img src="~/page-img/@Model.Page?.ThumbnailUrl" class="d-block w-100 mb-5" alt="..." />
+                    }
                     <div>
                         @Html.Raw(Model.Page?.Description)
                     </div>
