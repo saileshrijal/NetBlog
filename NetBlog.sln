@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Web", "NetBlog.Web\NetBlog.Web.csproj", "{6ED41D43-957D-490A-AD2B-987CEA6306DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Web", "NetBlog.Web\NetBlog.Web.csproj", "{6ED41D43-957D-490A-AD2B-987CEA6306DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Models", "NetBlog.Models\NetBlog.Models.csproj", "{08C4693E-184C-4D88-8A46-C627CCB1F3FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Models", "NetBlog.Models\NetBlog.Models.csproj", "{08C4693E-184C-4D88-8A46-C627CCB1F3FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.ViewModels", "NetBlog.ViewModels\NetBlog.ViewModels.csproj", "{DB3E6753-4B04-4EF0-ACA8-3728F6753803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.ViewModels", "NetBlog.ViewModels\NetBlog.ViewModels.csproj", "{DB3E6753-4B04-4EF0-ACA8-3728F6753803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Repositories", "NetBlog.Repositories\NetBlog.Repositories.csproj", "{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Repositories", "NetBlog.Repositories\NetBlog.Repositories.csproj", "{5F350ED1-1003-4A8F-A16C-6D9ECFCF7D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Utilities", "NetBlog.Utilities\NetBlog.Utilities.csproj", "{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Utilities", "NetBlog.Utilities\NetBlog.Utilities.csproj", "{8FE0882A-FBE9-491C-9D1C-26239DECDBA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Services", "NetBlog.Services\NetBlog.Services.csproj", "{D8846DB9-C690-4827-B766-866B12252359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Services", "NetBlog.Services\NetBlog.Services.csproj", "{D8846DB9-C690-4827-B766-866B12252359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBlog.Data", "NetBlog.Data\NetBlog.Data.csproj", "{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBlog.Data", "NetBlog.Data\NetBlog.Data.csproj", "{C2D68DFB-3434-4C96-9BD2-0B8FE01452F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

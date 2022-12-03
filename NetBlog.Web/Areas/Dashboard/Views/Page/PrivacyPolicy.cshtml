@@ -16,7 +16,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Privacy Policy</h6>
         </div>
         <div class="card-body">
-            <form method="post" asp-controller="Page" asp-action="PrivacyPolicy">
+            <form method="post" asp-controller="Page" asp-action="PrivacyPolicy" enctype="multipart/form-data">
                 <input asp-for="Id" type="hidden" />
                 <input asp-for="CreatedDate" type="hidden" />
                 <input asp-for="Slug" type="hidden" />
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <textarea id="mytextarea" asp-for="Description" class="form-control" rows="5"></textarea>
                     <span class="text-danger" asp-validation-for="Description"></span>
                 </div>
 
